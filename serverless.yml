@@ -1,0 +1,47 @@
+service: lambda-api
+
+frameworkVersion: '2 || 3'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  newUser:
+    handler: userHandler.newUser
+    events: 
+      - http:
+            path: /users
+            method: post
+  auth:
+    handler: userHandler.auth
+    events: 
+      - http:
+            path: /users/auth
+            method: post
+  newTask:
+    handler: taskHandler.newTask
+    events:
+      - http:
+            path: /tasks
+            method: post
+  getUserTasks:
+    handler: taskHandler.getUserTasks
+    events:
+      - http:
+            path: /users/{id}/tasks
+            method: get
+  updateTask:
+    handler: taskHandler.updateTask
+    events: 
+      - http: 
+            path: /tasks/{id}
+            method: put
+  deleteTask:
+    handler: taskHandler.deleteTask
+    events:
+      - http: 
+            path: /tasks/{id}
+            method: delete
